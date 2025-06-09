@@ -1,18 +1,22 @@
 import { useState } from "react";
+import { useMenuList } from "../context/AppContext";
 import Item from "./Item";
 import OrderModal from "./OrderModal";
 
-function Menu({ menu, cart, setCart }) {
+function MenuList() {
+  const { menuList } = useMenuList();
+
   const [modalOn, setModalOn] = useState(false);
   const [modalMenu, setModalMenu] = useState(null);
-  if (!menu)
+  const categorys = Object.keys(menuList);
+
+  if (!menuList)
     return (
       <div style={{ textAlign: "center", margin: "80px" }}>
         메뉴 정보가 없어요!
       </div>
     );
 
-  const categorys = Object.keys(menu);
   return (
     <>
       {categorys.map((category) => {
@@ -20,7 +24,7 @@ function Menu({ menu, cart, setCart }) {
           <section key={category}>
             <h2>{category}</h2>
             <ul className="menu">
-              {menu[category].map((item) => (
+              {menuList[category].map((item) => (
                 <Item
                   key={item.name}
                   item={item}
@@ -34,16 +38,9 @@ function Menu({ menu, cart, setCart }) {
           </section>
         );
       })}
-      {modalOn ? (
-        <OrderModal
-          modalMenu={modalMenu}
-          setModalOn={setModalOn}
-          cart={cart}
-          setCart={setCart}
-        />
-      ) : null}
+      {modalOn && <OrderModal modalMenu={modalMenu} setModalOn={setModalOn} />}
     </>
   );
 }
 
-export default Menu;
+export default MenuList;

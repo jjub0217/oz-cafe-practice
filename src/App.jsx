@@ -1,29 +1,17 @@
-import { useState } from "react";
-import "./App.scss";
-import data from "./assets/data";
-import Header from "./components/Header";
-import Menu from "./components/Menu";
 import { Route, Routes } from "react-router-dom";
-import Cart from "./components/Cart";
+import "./App.scss";
+import CartList from "./components/CartList";
+import Header from "./components/Header";
+import MenuList from "./components/MenuList";
 
 function App() {
-  const [menu, setMenu] = useState(data.menu);
-  const [cart, setCart] = useState([]);
-  console.log(cart);
-
   return (
     <div>
       <Header />
       <main>
         <Routes>
-          <Route
-            path="/"
-            element={<Menu menu={menu} cart={cart} setCart={setCart} />}
-          />
-          <Route
-            path="/cart"
-            element={<Cart menu={menu} cart={cart} setCart={setCart} />}
-          />
+          <Route path="/" element={<MenuList />} />
+          <Route path="/cart" element={<CartList />} />
         </Routes>
       </main>
     </div>
